@@ -1,18 +1,27 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <section>
+    <h3>Home</h3>
+    <TweetForm />
+    <TweetList />
+  </section>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import TweetForm from "../components/tweets/TweetForm";
+import TweetList from "../components/tweets/TweetList";
 
 export default {
-  name: 'Home',
+  name: "Home",
   components: {
-    HelloWorld
-  }
-}
+    TweetForm,
+    TweetList,
+  },
+};
 </script>
+
+<style scoped>
+h3 {
+  border-bottom: 1px solid var(--border-color);
+  padding: 1rem;
+}
+</style>
