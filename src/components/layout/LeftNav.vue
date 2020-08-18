@@ -55,7 +55,7 @@ export default {
 <style scoped>
 section {
   height: 100vh;
-  border-right: 1px solid var(--border-color);
+  /* border-right: 1px solid var(--border-color); */
   padding-top: 2rem;
   padding-right: 1rem;
 }

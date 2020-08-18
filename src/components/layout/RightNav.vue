@@ -13,7 +13,6 @@ export default {
 <style scoped>
 section {
   height: 100vh;
-  border-left: 1px solid var(--border-color);
 }
 
 h1 {

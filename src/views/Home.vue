@@ -1,18 +1,20 @@
 <template>
-  <section>
+  <Layout>
     <h3>Home</h3>
     <TweetForm />
     <TweetList />
-  </section>
+  </Layout>
 </template>
 
 <script>
+import Layout from "../components/layout/Layout";
 import TweetForm from "../components/tweets/TweetForm";
 import TweetList from "../components/tweets/TweetList";
 
 export default {
   name: "Home",
   components: {
+    Layout,
     TweetForm,
     TweetList,
   },
