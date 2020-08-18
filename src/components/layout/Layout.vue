@@ -39,6 +39,10 @@ section {
     display: none;
   }
 
+  .slot {
+    border-right: none;
+  }
+
   section {
     grid-template-columns: auto 1fr;
   }

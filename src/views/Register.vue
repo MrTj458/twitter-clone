@@ -94,6 +94,7 @@ label {
   padding: 0.5rem;
   background: var(--bg-light);
   border-bottom: 2px solid var(--border-color);
+  border-radius: 2px;
 }
 
 .field:focus-within {
