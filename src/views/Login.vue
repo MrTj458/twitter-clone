@@ -1,7 +1,7 @@
 <template>
   <section>
     <i class="fas fa-dove fa-2x"></i>
-    <h2>Register for Fake Twitter</h2>
+    <h2>Login to Fake Twitter</h2>
     <form @submit.prevent="register">
       <fieldset>
         <div class="field">
@@ -9,36 +9,26 @@
           <input v-model="email" ref="email" type="text" name="email" />
         </div>
         <div class="field">
-          <label for="username">Username</label>
-          <input v-model="username" type="text" name="username" />
-        </div>
-        <div class="field">
           <label for="password">Password</label>
           <input v-model="password" type="password" name="password" />
         </div>
-        <div class="field">
-          <label for="password2">Confirm Password</label>
-          <input v-model="password2" type="password" name="password2" />
-        </div>
-        <input type="submit" value="Register" />
+        <input type="submit" value="Log in" />
       </fieldset>
     </form>
     <small>
-      Already have an account?
-      <router-link :to="{name: 'login'}">Log in</router-link>
+      Need an account?
+      <router-link :to="{name: 'register'}">Register</router-link>
     </small>
   </section>
 </template>
 
 <script>
 export default {
-  name: "Register",
+  name: "Login",
   data() {
     return {
       email: "",
-      username: "",
       password: "",
-      password2: "",
     };
   },
   mounted() {
@@ -46,9 +36,7 @@ export default {
   },
   methods: {
     register() {
-      alert(
-        `${this.email} ${this.username} ${this.password} ${this.password2}`
-      );
+      alert(`${this.email} ${this.password}`);
     },
   },
 };
