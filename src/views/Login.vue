@@ -53,7 +53,10 @@ export default {
         .then(() => {
           this.$router.push({ name: "home" });
         })
-        .catch(() => (this.error = "Email or password is incorrect."));
+        .catch((err) => {
+          console.error(err);
+          this.error = "Email or password is incorrect.";
+        });
     },
   },
 };

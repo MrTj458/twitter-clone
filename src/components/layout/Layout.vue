@@ -1,6 +1,6 @@
 <template>
   <section>
-    <LeftNav class="left" />
+    <LeftNav />
     <div class="slot">
       <slot></slot>
     </div>

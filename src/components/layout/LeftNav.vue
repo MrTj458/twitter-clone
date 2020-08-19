@@ -43,21 +43,44 @@
         </router-link>
       </li>
     </ul>
+    <div class="user-info">
+      <div v-if="user" class="user">
+        <img :src="user.avatar" alt />
+        <p class="username">{{ user.username }}</p>
+      </div>
+      <div v-else class="logins">
+        <button>Log In</button>
+      </div>
+    </div>
   </section>
 </template>
 
 <script>
 export default {
   name: "LeftNav",
+  computed: {
+    user() {
+      console.log(this.$store.state.user);
+      return this.$store.state.user;
+    },
+  },
 };
 </script>
 
 <style scoped>
 section {
   height: 100vh;
-  /* border-right: 1px solid var(--border-color); */
-  padding-top: 2rem;
-  padding-right: 1rem;
+  padding: 2rem 1rem 0 0;
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
 }
 
 h1 {
@@ -102,12 +125,36 @@ span {
   margin-left: 1rem;
 }
 
+.user-info {
+  width: 100%;
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  margin-bottom: 0.5rem;
+}
+
+.user-info:hover {
+  background: var(--hover-background);
+}
+
+.user {
+  display: flex;
+  align-items: center;
+}
+
+.user img {
+  margin-right: 0.5rem;
+}
+
 @media only screen and (max-width: 1000px) {
   section {
     padding-right: 0;
   }
 
   span {
+    display: none;
+  }
+
+  .username {
     display: none;
   }
 }
