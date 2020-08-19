@@ -2,6 +2,7 @@
   <section>
     <i class="fas fa-dove fa-2x"></i>
     <h2>Register for Fake Twitter</h2>
+    <p v-if="error">{{ error }}</p>
     <form @submit.prevent="register">
       <fieldset>
         <div class="field">
@@ -20,21 +21,24 @@
           <label for="password2">Confirm Password</label>
           <input v-model="password2" type="password" name="password2" />
         </div>
-        <input type="submit" value="Register" />
+        <input type="submit" value="Register" :disabled="!canRegister" />
       </fieldset>
     </form>
     <small>
       Already have an account?
-      <router-link :to="{name: 'login'}">Log in</router-link>
+      <router-link :to="{ name: 'login' }">Log in</router-link>
     </small>
   </section>
 </template>
 
 <script>
+import { auth, db } from "../firebase/init";
+
 export default {
   name: "Register",
   data() {
     return {
+      error: "",
       email: "",
       username: "",
       password: "",
@@ -44,11 +48,36 @@ export default {
   mounted() {
     this.$refs.email.focus();
   },
+  computed: {
+    canRegister() {
+      if (this.email && this.username && this.password && this.password2) {
+        return true;
+      }
+      return false;
+    },
+  },
   methods: {
     register() {
-      alert(
-        `${this.email} ${this.username} ${this.password} ${this.password2}`
-      );
+      if (this.password !== this.password2) {
+        this.error = "Passwords must match!";
+        return;
+      }
+
+      auth
+        .createUserWithEmailAndPassword(this.email, this.password)
+        .then((cred) => {
+          db.collection("users").doc(cred.user.uid).set({
+            username: this.username,
+            avatar:
+              "https://firebasestorage.googleapis.com/v0/b/twitter-clone-716ff.appspot.com/o/avatars%2Fdefault.jpeg?alt=media&token=43da35a8-5b7f-4461-b17d-535e564927c4",
+          });
+        })
+        .then(() => {
+          this.$router.push({ name: "home" });
+        })
+        .catch((err) => {
+          this.error = err.message;
+        });
     },
   },
 };
@@ -64,6 +93,11 @@ section {
 
 i {
   margin: 2rem 0 1rem 0;
+}
+
+p {
+  margin-bottom: 2rem;
+  color: var(--error-color);
 }
 
 h2 {
