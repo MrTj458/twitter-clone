@@ -2,7 +2,8 @@
   <section>
     <i class="fas fa-dove fa-2x"></i>
     <h2>Login to Fake Twitter</h2>
-    <form @submit.prevent="register">
+    <p v-if="error">{{ error }}</p>
+    <form @submit.prevent="login">
       <fieldset>
         <div class="field">
           <label for="email">Email</label>
@@ -12,7 +13,7 @@
           <label for="password">Password</label>
           <input v-model="password" type="password" name="password" />
         </div>
-        <input type="submit" value="Log in" />
+        <input type="submit" value="Log in" :disabled="!canLogin" />
       </fieldset>
     </form>
     <small>
@@ -23,10 +24,13 @@
 </template>
 
 <script>
+import { auth } from "../firebase/init";
+
 export default {
   name: "Login",
   data() {
     return {
+      error: "",
       email: "",
       password: "",
     };
@@ -34,9 +38,22 @@ export default {
   mounted() {
     this.$refs.email.focus();
   },
+  computed: {
+    canLogin() {
+      if (this.email && this.password) {
+        return true;
+      }
+      return false;
+    },
+  },
   methods: {
-    register() {
-      alert(`${this.email} ${this.password}`);
+    login() {
+      auth
+        .signInWithEmailAndPassword(this.email, this.password)
+        .then(() => {
+          this.$router.push({ name: "home" });
+        })
+        .catch(() => (this.error = "Email or password is incorrect."));
     },
   },
 };
@@ -52,6 +69,11 @@ section {
 
 i {
   margin: 2rem 0 1rem 0;
+}
+
+p {
+  margin-bottom: 2rem;
+  color: var(--error-color);
 }
 
 h2 {
